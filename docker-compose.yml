@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  db-postgrees-nest:
+    image: postgres:alpine
+    ports:
+      - "5336:5432"
+    container_name: "db-postgrees-nest"
+    restart: always
+    volumes:
+      - ./banco-de-dados-nest-api:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpassword
+      POSTGRES_DB: nest-api
+
+volumes:
+  banco-de-dados-nest-api:

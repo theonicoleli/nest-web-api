@@ -21,7 +21,7 @@ export class UserController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Retorna todos os users' })
+  @ApiOperation({ summary: 'Retorna todos os usuários' })
   async findAll(): Promise<User[]> {
     return await this.userRepository.findAll();
   }

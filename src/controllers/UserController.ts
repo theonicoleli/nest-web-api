@@ -50,6 +50,10 @@ export class UserController {
   @Delete(':id')
   @ApiOperation({ summary: 'Deleta um usuário' })
   async remove(@Param('id') id: number): Promise<void> {
-    await this.userRepository.delete(id);
+    try {
+      await this.userRepository.delete(id);
+    } catch (error) {
+      throw new HttpException('Error deleting user', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

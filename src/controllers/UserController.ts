@@ -11,11 +11,13 @@ export class UserController {
   constructor(private readonly userRepository: UserRepository) {}
 
   @Post()
-  @ApiOperation({ summary: 'Adiciona um novo usuário' })
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async create(@Body() createUserDto: CreateUserDto) {
     try {
       return await this.userRepository.create(createUserDto);
     } catch (error) {
+      if (error.code === '23505') {
+        throw new HttpException('CPF já cadastrado', HttpStatus.CONFLICT);
+      }
       throw new HttpException('Erro ao criar usuário', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
